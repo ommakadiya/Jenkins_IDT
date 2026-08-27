@@ -2,24 +2,26 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
                 echo 'Checking out source code...'
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
                 echo 'Building the project...'
-                bat 'if exist index.html echo Build successful'
+                sh 'test -f index.html'
+                echo 'Build successful'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Testing the project...'
-                bat 'if exist index.html (echo Test passed) else (exit /b 1)'
+                sh 'test -f index.html'
+                echo 'Test passed'
             }
         }
 
